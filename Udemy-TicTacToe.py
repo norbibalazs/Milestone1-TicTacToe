@@ -26,21 +26,10 @@ def main():
         if 0 < h < 10:
             if d[h] != ' ':
                 print('That was previously reserved, choose another one')
+
             else:
                 d[h] = p1xo
                 list(map(trow, table1))
-                for x in range(0, len(j)):
-                    if d[j[x]] == d[k[x]] == d[l[x]] == p1xo:
-                        print('Congratulations P1, You Won!!!')
-                        restart()
-                    elif d[j[x]] == d[k[x]] == d[l[x]] == p2xo:
-                        print('Congratulations P2, You Won!!!')
-                        restart()
-                if ' ' in d.values():
-                    play2(p2xo)
-                else:
-                    print('Table is full.Game over.')
-                    restart()
         else:
             print('Please give a number between 1 and 9!')
 
@@ -54,18 +43,6 @@ def main():
             else:
                 d[h] = p2xo
                 list(map(trow, table1))
-                for x in range(0, len(j)):
-                    if d[j[x]] == d[k[x]] == d[l[x]] == p1xo:
-                        print('Congratulations P1, You Won!!!')
-                        restart()
-                    elif d[j[x]] == d[k[x]] == d[l[x]] == p2xo:
-                        print('Congratulations P2, You Won!!!')
-                        restart()
-                if ' ' in d.values():
-                    play(p1xo)
-                else:
-                    print('Table is full.Game over.')
-                    restart()
         else:
             print('Please give a number between 1 and 9!')
 
@@ -75,27 +52,46 @@ def main():
     k = (2, 5, 8, 5, 5, 4, 5, 6)
     l = (3, 6, 9, 9, 7, 7, 8, 9)
 
-#### dict for saving the steps ###
+#### list for saving the steps ###
 
-    d = {1: ' ', 2: ' ', 3: ' ', 4: ' ', 5: ' ', 6: ' ', 7: ' ', 8: ' ', 9: ' '}
+    d = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 
 ### choose side ###
 
     print('Lets play Tic Tac Toe!')
-    p1xo = input('P1, please choose: X or O:').upper()
-    if p1xo == 'X':
-        p2xo = 'O'
-    else:
-        p2xo = 'X'
+
+    while p1xo != 'X' or p1xo != 'O':
+        p1xo = input('P1, please choose: X or O:').upper()
+        if p1xo == 'X':
+            p2xo = 'O'
+            break
+        else:
+            p2xo = 'X'
+            break
 
 ### creating the table ###
 
     table1 = [2, 3, 2, 1, 2, 4, 2, 1, 2, 5, 2]
     list(map(trow, table1))
 
-### FTW loop ###
+### Game loop ###
 
-    play(p1xo)
+    for x in range(0, len(j), 2):
+        if d[j[x]] == d[k[x]] == d[l[x]] == p1xo:
+            print('Congratulations P1, You Won!!!')
+            restart()
+        elif d[j[x]] == d[k[x]] == d[l[x]] == p2xo:
+            print('Congratulations P2, You Won!!!')
+            restart()
+        else:
+            if ' ' in d:
+                play(p1xo)
+            elif ' ' in d:
+                play(p2xo)
+            else:
+                print('Table is full.Game over.')
+                restart()
+
 
     restart()
 
