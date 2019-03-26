@@ -26,34 +26,38 @@ def main():
 
     def play1(player):
         print('P1, Its your turn(1-9):')
-        h = int(input())
-        if 0 < h < 10:
-            if d[h] != ' ':
-                print('That was previously reserved, choose another one')
-                play1(p1)
+        try:
+            h = int(input())
+            if 0 < h < 10:
+                if d[h] != ' ':
+                    print('That was previously reserved, choose another one')
+                    play1(p1)
+                else:
+                    d[h] = player
             else:
-                clear()
-                d[h] = player
-                list(map(trow, table1))
-        else:
+                print('Please give a number between 1 and 9!')
+                play1(p1)
+        except ValueError:
             print('Please give a number between 1 and 9!')
             play1(p1)
 
+
     def play2(player):
         print('P2, Its your turn(1-9):')
-        h = int(input())
-        if 0 < h < 10:
-            if d[h] != ' ':
-                print('That was previously reserved, choose another one')
-                play2(p2)
+        try:
+            h = int(input())
+            if 0 < h < 10:
+                if d[h] != ' ':
+                    print('That was previously reserved, choose another one')
+                    play2(p2)
+                else:
+                    d[h] = player
             else:
-                clear()
-                d[h] = player
-                list(map(trow, table1))
-        else:
+                print('Please give a number between 1 and 9!')
+                play2(p2)
+        except ValueError:
             print('Please give a number between 1 and 9!')
             play2(p2)
-
 
 ### winning combinations jkl ###
 
@@ -72,13 +76,9 @@ def main():
         p1 = input('P1, please choose: X or O:').upper()
         if p1 == 'X':
             p2 = 'O'
-            print('Player 1 is {}'.format(p1))
-            print('Player 2 is {}'.format(p2))
             break
         elif p1 == 'O':
             p2 = 'X'
-            print('Player 1 is {}'.format(p1))
-            print('Player 2 is {}'.format(p2))
             break
         else:
             continue
@@ -86,6 +86,7 @@ def main():
 ### creating the table ###
 
     table1 = [2, 3, 2, 1, 2, 4, 2, 1, 2, 5, 2]
+    clear()
     list(map(trow, table1))
 
 ### Game loop ###
@@ -99,13 +100,19 @@ def main():
                 elif d[j[y]] == d[k[y]] == d[l[y]] == p2:
                     print('Congratulations P2, You Won!!!')
                     restart()
-
             if ' ' in d:
                 if x % 2 != 0:
+                    print('Player 1 is {}'.format(p1))
+                    print('Player 2 is {}'.format(p2))
                     play1(p1)
+                    clear()
+                    list(map(trow, table1))
                 else:
+                    print('Player 1 is {}'.format(p1))
+                    print('Player 2 is {}'.format(p2))
                     play2(p2)
-
+                    clear()
+                    list(map(trow, table1))
             else:
                 print('Table is full. Its a tie.')
                 restart()
