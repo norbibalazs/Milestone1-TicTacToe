@@ -1,4 +1,9 @@
+import os
+
 def main():
+
+    def clear():
+        os.system( 'cls' )
 
     def restart():
         restart = input('Do you want to play again? Y/N').lower()
@@ -19,32 +24,36 @@ def main():
         if rownum == 5:
             print(' ', d[1], ' | ', d[2], ' | ', d[3], ' ')
 
-    def play(p1xo):
+    def play1(player):
         print('P1, Its your turn(1-9):')
-        print(d)
         h = int(input())
         if 0 < h < 10:
             if d[h] != ' ':
                 print('That was previously reserved, choose another one')
-
+                play1(p1)
             else:
-                d[h] = p1xo
+                clear()
+                d[h] = player
                 list(map(trow, table1))
         else:
             print('Please give a number between 1 and 9!')
+            play1(p1)
 
-    def play2(p2xo):
+    def play2(player):
         print('P2, Its your turn(1-9):')
-        print(d)
         h = int(input())
         if 0 < h < 10:
             if d[h] != ' ':
                 print('That was previously reserved, choose another one')
+                play2(p2)
             else:
-                d[h] = p2xo
+                clear()
+                d[h] = player
                 list(map(trow, table1))
         else:
             print('Please give a number between 1 and 9!')
+            play2(p2)
+
 
 ### winning combinations jkl ###
 
@@ -54,20 +63,25 @@ def main():
 
 #### list for saving the steps ###
 
-    d = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+    d = ['X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 
 ### choose side ###
 
     print('Lets play Tic Tac Toe!')
-
-    while p1xo != 'X' or p1xo != 'O':
-        p1xo = input('P1, please choose: X or O:').upper()
-        if p1xo == 'X':
-            p2xo = 'O'
+    while True:
+        p1 = input('P1, please choose: X or O:').upper()
+        if p1 == 'X':
+            p2 = 'O'
+            print('Player 1 is {}'.format(p1))
+            print('Player 2 is {}'.format(p2))
+            break
+        elif p1 == 'O':
+            p2 = 'X'
+            print('Player 1 is {}'.format(p1))
+            print('Player 2 is {}'.format(p2))
             break
         else:
-            p2xo = 'X'
-            break
+            continue
 
 ### creating the table ###
 
@@ -76,23 +90,25 @@ def main():
 
 ### Game loop ###
 
-    for x in range(0, len(j), 2):
-        if d[j[x]] == d[k[x]] == d[l[x]] == p1xo:
-            print('Congratulations P1, You Won!!!')
-            restart()
-        elif d[j[x]] == d[k[x]] == d[l[x]] == p2xo:
-            print('Congratulations P2, You Won!!!')
-            restart()
-        else:
+    while True:
+        for x in range(1, 10):
+            for y in range(0, len(j)):
+                if d[j[y]] == d[k[y]] == d[l[y]] == p1:
+                    print('Congratulations P1, You Won!!!')
+                    restart()
+                elif d[j[y]] == d[k[y]] == d[l[y]] == p2:
+                    print('Congratulations P2, You Won!!!')
+                    restart()
+
             if ' ' in d:
-                play(p1xo)
-            elif ' ' in d:
-                play(p2xo)
+                if x % 2 != 0:
+                    play1(p1)
+                else:
+                    play2(p2)
+
             else:
-                print('Table is full.Game over.')
+                print('Table is full. Its a tie.')
                 restart()
 
-
-    restart()
 
 main()
